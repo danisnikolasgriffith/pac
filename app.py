@@ -38,13 +38,23 @@ elif abs(delta) < 0.01:
 else:
     st.error("Il piano è in NEGATIVO")
 
+def display_row(label, value_abs, value_pct=None):
+    col_label, col_val = st.columns([1, 1])
+    with col_label:
+        st.markdown(f"**{label}**")
+    with col_val:
+        if value_pct is not None:
+            st.markdown(f"{value_abs:,.2f} €  ({value_pct:+.2f}%)")
+        else:
+            st.markdown(f"{value_abs:,.2f} €")
+
 # Visualizzazione in elenco dettagliato
 st.write("### Dettaglio Finanziario")
-st.markdown(f"- **Capitale Versato:** {capitale_versato:,.2f} €")
-st.markdown(f"- **Valore Finale Lordo:** {Vfl:,.2f} € ({((Vfl/capitale_versato)-1)*100:+.2f}%)")
-st.markdown(f"- **Costi Totali:** {costi_totali:,.2f} € ({(costi_totali/capitale_versato)*100:.2f}%)")
-st.markdown(f"- **Valore Finale Netto:** {Vnf:,.2f} € ({((Vnf/capitale_versato)-1)*100:+.2f}%)")
-st.markdown(f"- **Profitto/Perdita:** {delta:,.2f} € ({((delta/capitale_versato)*100):+.2f}%)")
+display_row("Capitale Versato", capitale_versato)
+display_row("Valore Finale Lordo", Vfl, ((Vfl/capitale_versato)-1)*100)
+display_row("Costi Totali", costi_totali, (costi_totali/capitale_versato)*100)
+display_row("Valore Finale Netto", Vnf, ((Vnf/capitale_versato)-1)*100)
+display_row("Profitto/Perdita", delta, (delta/capitale_versato)*100)
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
