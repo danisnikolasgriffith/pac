@@ -8,7 +8,7 @@ st.title("Dashboard Analisi PAC")
 # 1. Sidebar per gli INPUT
 st.sidebar.header("Parametri PAC")
 Ii = st.sidebar.slider("Contributo Iniziale (€)", 0, 20000, 1800, step=1000)
-Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=100)
+Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=50)
 Ci = st.sidebar.slider("Costo una-tantum (%)", 0.0, 5.0, 0.0) / 100
 Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 5.0, 2.0) / 100
 P = st.sidebar.slider("Performance annua attesa (%)", -20.0, 40.0, 5.0) / 100
