@@ -38,25 +38,27 @@ elif abs(delta) < 0.01:
 else:
     st.error("Il piano è in NEGATIVO")
 
-def display_row_aligned(label, value_abs, value_pct=None):
+def display_row_right_aligned(label, value_abs, value_pct=None):
     col_label, col_abs, col_pct = st.columns([2, 1, 1])
     with col_label:
         st.markdown(f"**{label}**")
     with col_abs:
-        st.markdown(f"{value_abs:,.2f} €")
+        # Allineamento a destra usando il padding
+        st.markdown(f"<div style='text-align: right'>{value_abs:,.2f} €</div>", unsafe_allow_html=True)
     with col_pct:
         if value_pct is not None:
-            st.markdown(f"({value_pct:+.2f}%)")
+            # Allineamento a destra per le percentuali
+            st.markdown(f"<div style='text-align: right'>({value_pct:+.2f}%)</div>", unsafe_allow_html=True)
         else:
-            st.markdown("-")
+            st.markdown("<div style='text-align: right'>-</div>", unsafe_allow_html=True)
 
 # Visualizzazione in elenco dettagliato
 st.write("### Dettaglio Finanziario")
-display_row_aligned("Capitale Versato", capitale_versato)
-display_row_aligned("Valore Finale Lordo", Vfl, ((Vfl/capitale_versato)-1)*100)
-display_row_aligned("Costi Totali", costi_totali, (costi_totali/capitale_versato)*100)
-display_row_aligned("Valore Finale Netto", Vnf, ((Vnf/capitale_versato)-1)*100)
-display_row_aligned("Profitto/Perdita", delta, (delta/capitale_versato)*100)
+display_row_right_aligned("Capitale Versato", capitale_versato)
+display_row_right_aligned("Valore Finale Lordo", Vfl, ((Vfl/capitale_versato)-1)*100)
+display_row_right_aligned("Costi Totali", costi_totali, (costi_totali/capitale_versato)*100)
+display_row_right_aligned("Valore Finale Netto", Vnf, ((Vnf/capitale_versato)-1)*100)
+display_row_right_aligned("Profitto/Perdita", delta, (delta/capitale_versato)*100)
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
