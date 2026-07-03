@@ -84,7 +84,7 @@ display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_infla
 st.subheader("Composizione Valore Finale")
 df = pd.DataFrame({
     "Componente": ["Valore Finale Lordo Costi", "Valore Finale Netto Costi", "Valore Finale Netto Tasse", "Valore Finale Netto Inflazione",],
-    "Valore": [Vff, delta, Vnf_netto_fiscale, Vnf_netto_inflazione]
+    "Valore": [Vlf, Vnf, Vnf_netto_fiscale, Vnf_netto_inflazione]
 })
 fig = px.bar(df, x="Componente", y="Valore", color="Componente", text_auto='.2s')
 st.plotly_chart(fig, use_container_width=True)
