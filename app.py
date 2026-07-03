@@ -127,3 +127,27 @@ df = pd.DataFrame({
 })
 fig = px.bar(df, x="Componente", y="Valore", color="Componente", text_auto='.2s')
 st.plotly_chart(fig, use_container_width=True)
+
+
+# 2.1 Calcolo Trend Temporale (per il grafico)
+anni_range = list(range(1, anni + 1))
+valori_trend = []
+capitale_accumulato = 0
+
+for a in anni_range:
+    # Calcolo valore lordo accumulato fino all'anno 'a'
+    v_a = (Ii * (1 + P)**a) + (Ir * 12 * (((1 + P)**a - 1) / P) if P != 0 else Ir * 12 * a)
+    valori_trend.append(v_a)
+
+df_trend = pd.DataFrame({
+    "Anno": anni_range,
+    "Valore Lordo": valori_trend
+})
+
+# Visualizzazione Grafica Trend
+st.subheader("Evoluzione Temporale del Valore Lordo")
+fig_trend = px.line(df_trend, x="Anno", y="Valore Lordo", markers=True, 
+                    labels={"Valore Lordo": "Valore (€)"},
+                    title="Crescita del capitale nel tempo")
+fig_trend.update_traces(line_color='#1f77b4', line_width=3)
+st.plotly_chart(fig_trend, use_container_width=True)
