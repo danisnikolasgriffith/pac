@@ -12,8 +12,10 @@ Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=50)
 Ci = st.sidebar.slider("Costo una-tantum (%)", 0.0, 5.0, 0.0) / 100
 Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 3.0, 1.5, step=0.1) / 100
 P = st.sidebar.slider("Performance annua attesa (%)", -20.0, 20.0, 0.0, step=0.5) / 100
+st.sidebar.divider()
 I = st.sidebar.slider("Inflazione annua (%)", 0.0, 5.0, 2.0, step=0.5) / 100
 T = st.sidebar.selectbox("Aliquota Fiscale (%)", [12.5, 26.0]) / 100
+st.sidebar.divider()
 anni = st.sidebar.slider("Orizzonte temporale (anni)", 1, 20, 5)
 
 # 2. Logica di Calcolo
@@ -33,9 +35,11 @@ delta = Vnf - capitale_versato # profitto/perdita
 delta_tassabile = max(0, delta)
 tasse = delta_tassabile * T
 Vnf_netto_fiscale = Vnf - tasse
+delta_netto_fiscale = Vnf_netto_fiscale - capitale_versato
 
 # Calcolo valore reale (potere d'acquisto)
 Vnf_reale = Vnf_netto_fiscale / ((1 + I)**anni)
+delta_netto_reale = Vnf_reale - capitale_versato
 
 # 3. Risultati e Visualizzazione
 st.subheader("Risultati")
@@ -70,8 +74,11 @@ display_row_right_aligned("Costi Totali", costi_totali, (costi_totali/capitale_v
 display_row_right_aligned("Valore Finale Netto Costi", Vnf, ((Vnf/capitale_versato)-1)*100)
 display_row_right_aligned("Profitto/Perdita", delta, (delta/capitale_versato)*100)
 st.divider()
-display_row_right_aligned("Profitto/Perdita Netto Tasse", Vnf_netto_fiscale, ((Vnf_netto_fiscale/capitale_versato)-1)*100)
-display_row_right_aligned("Profitto/Perdita Netto Inflazione", Vnf_reale, ((Vnf_reale/capitale_versato)-1)*100)
+display_row_right_aligned("Valore Finale    Netto Tasse", Vnf_netto_fiscale, ((Vnf_netto_fiscale/capitale_versato)-1)*100)
+display_row_right_aligned("Profitto/Perdita Netto Tasse", delta_netto_fiscale, (delta_netto_fiscale/capitale_versato)*100)
+st.divider()
+display_row_right_aligned("Valore Finale    Netto Inflazione", Vnf_reale, ((Vnf_reale/capitale_versato)-1)*100)
+display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_reale, (delta_netto_reale/capitale_versato)*100)
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
