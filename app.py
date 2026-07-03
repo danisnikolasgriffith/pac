@@ -10,6 +10,7 @@ st.sidebar.header("Parametri PAC")
 Ii = st.sidebar.slider("Contributo Iniziale (€)", 0, 20000, 1800, step=1000)
 Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=50)
 Ci = st.sidebar.slider("Costo una-tantum (%)", 0.0, 5.0, 0.0) / 100
+Ct = st.sidebar.slider("Costi fissi di transazione (€)", 0.0, 10.0, 0.0, step=0.05)
 Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 3.0, 1.5, step=0.1) / 100
 P = st.sidebar.slider("Performance annua attesa (%)", -20.0, 20.0, 0.0, step=0.5) / 100
 st.sidebar.divider()
@@ -28,7 +29,9 @@ else:
 delta_lordo_costi = vf_lordo_costi - capitale_versato
 
 costi_una_tantum = Ii * Ci
-costi_totali = costi_una_tantum + (vf_lordo_costi - (vf_lordo_costi / ((1 + Cr)**anni)))
+costi_transazione_totali = Ct * 12 * anni
+costi_ricorrenti_totali = (vf_lordo_costi - (vf_lordo_costi / ((1 + Cr)**anni)))
+costi_totali = costi_una_tantum + costi_transazione_totali + costi_ricorrenti_totali
 vf_netto_costi = vf_lordo_costi - costi_totali
 delta_netto_costi = vf_netto_costi - capitale_versato
 
