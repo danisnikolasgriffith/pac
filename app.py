@@ -78,7 +78,7 @@ display_row_right_aligned("Valore Finale    Netto Tasse", Vnf_netto_fiscale, ((V
 display_row_right_aligned("Profitto/Perdita Netto Tasse", delta_netto_fiscale, (delta_netto_fiscale/capitale_versato)*100)
 st.divider()
 display_row_right_aligned("Valore Finale    Netto Inflazione", Vnf_reale, ((Vnf_reale/capitale_versato)-1)*100)
-display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_reale, (delta_netto_reale/capitale_versato)*100)
+display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_reale, (delta_netto_reale/capitale_versato)*100) 
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
