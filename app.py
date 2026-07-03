@@ -69,6 +69,9 @@ display_row_right_aligned("Valore Finale Lordo", Vfl, ((Vfl/capitale_versato)-1)
 display_row_right_aligned("Costi Totali", costi_totali, (costi_totali/capitale_versato)*100)
 display_row_right_aligned("Valore Finale Netto", Vnf, ((Vnf/capitale_versato)-1)*100)
 display_row_right_aligned("Profitto/Perdita", delta, (delta/capitale_versato)*100)
+st.divider()
+display_row("Valore Post-Tasse", Vnf_post_tasse, ((Vnf_post_tasse/capitale_versato)-1)*100)
+display_row("Potere d'Acquisto Reale", Vnf_reale, ((Vnf_reale/capitale_versato)-1)*100)
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
