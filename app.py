@@ -10,7 +10,7 @@ st.sidebar.header("Parametri PAC")
 Ii = st.sidebar.slider("Contributo Iniziale (€)", 0, 20000, 1800, step=1000)
 Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=50)
 Ci = st.sidebar.slider("Costo una-tantum (%)", 0.0, 5.0, 0.0) / 100
-Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 5.0, 2.0) / 100
+Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 3.0, 1.5, step=0.1) / 100
 P = st.sidebar.slider("Performance annua attesa (%)", -20.0, 20.0, 0.0, step=0.5) / 100
 anni = st.sidebar.slider("Orizzonte temporale (anni)", 1, 20, 5)
 
