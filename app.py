@@ -117,7 +117,7 @@ fig = px.bar(df, x="Componente", y="Valore", color="Componente", text_auto='.2s'
 st.plotly_chart(fig, use_container_width=True)
 
 # Visualizzazione Profitto/Perdita
-st.subheader("Composizione Valore Finale")
+st.subheader("Composizione Profitto/Perdita Finale")
 df = pd.DataFrame({
     "Componente": ["Lordo Costi", "Netto Costi", "Netto Tasse", "Netto Inflazione",],
     "Valore": [delta_lordo_costi, delta_netto_costi, delta_netto_fiscale, delta_netto_inflazione]
