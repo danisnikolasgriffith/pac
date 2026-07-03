@@ -12,6 +12,8 @@ Ir = st.sidebar.slider("Contributo Mensile (€)", 50, 500, 150, step=50)
 Ci = st.sidebar.slider("Costo una-tantum (%)", 0.0, 5.0, 0.0) / 100
 Cr = st.sidebar.slider("Costi ricorrenti annui (%)", 0.0, 3.0, 1.5, step=0.1) / 100
 P = st.sidebar.slider("Performance annua attesa (%)", -20.0, 20.0, 0.0, step=0.5) / 100
+I = st.sidebar.slider("Inflazione annua (%)", 0.0, 5.0, 2.0, step=0.5) / 100
+T = st.sidebar.selectbox("Aliquota Fiscale (%)", [12.5, 26.0]) / 100
 anni = st.sidebar.slider("Orizzonte temporale (anni)", 1, 20, 5)
 
 # 2. Logica di Calcolo
@@ -25,7 +27,15 @@ else:
 costi_una_tantum = Ii * Ci
 costi_totali = costi_una_tantum + (Vfl - (Vfl / ((1 + Cr)**anni)))
 Vnf = Vfl - costi_totali
-delta = Vnf - capitale_versato
+delta = Vnf - capitale_versato # profitto/perdita
+
+# Calcolo tasse su delta
+delta_tassabile = max(0, delta)
+tasse = delta_tassabile * T
+Vnf_netto_fiscale = Vnf - tasse
+
+# Calcolo valore reale (potere d'acquisto)
+Vnf_reale = Vnf_netto_fiscale / ((1 + I)**anni)
 
 # 3. Risultati e Visualizzazione
 st.subheader("Risultati")
