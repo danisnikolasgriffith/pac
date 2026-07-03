@@ -38,8 +38,8 @@ Vnf_netto_fiscale = Vnf - tasse
 delta_netto_fiscale = Vnf_netto_fiscale - capitale_versato
 
 # Calcolo valore reale (potere d'acquisto)
-Vnf_reale = Vnf_netto_fiscale / ((1 + I)**anni)
-delta_netto_reale = Vnf_reale - capitale_versato
+Vnf_netto_inflazione = Vnf_netto_fiscale / ((1 + I)**anni)
+delta_netto_inflazione = Vnf_netto_inflazione - capitale_versato
 
 # 3. Risultati e Visualizzazione
 st.subheader("Risultati")
@@ -77,8 +77,8 @@ st.divider()
 display_row_right_aligned("Valore Finale    Netto Tasse", Vnf_netto_fiscale, ((Vnf_netto_fiscale/capitale_versato)-1)*100)
 display_row_right_aligned("Profitto/Perdita Netto Tasse", delta_netto_fiscale, (delta_netto_fiscale/capitale_versato)*100)
 st.divider()
-display_row_right_aligned("Valore Finale    Netto Inflazione", Vnf_reale, ((Vnf_reale/capitale_versato)-1)*100)
-display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_reale, (delta_netto_reale/capitale_versato)*100) 
+display_row_right_aligned("Valore Finale    Netto Inflazione", Vnf_netto_inflazione, ((Vnf_netto_inflazione/capitale_versato)-1)*100)
+display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_inflazione, (delta_netto_inflazione/capitale_versato)*100) 
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
