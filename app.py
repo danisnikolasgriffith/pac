@@ -45,13 +45,37 @@ delta_netto_inflazione = vf_netto_fiscale - capitale_versato
 # 3. Risultati e Visualizzazione
 st.subheader("Risultati")
 
-# Banner Semaforo
-if delta > 0:
-    st.success("Il piano è in POSITIVO")
-elif abs(delta) < 0.01:
-    st.warning("Il piano è NEUTRO")
+# Banner Semaforo (Lordo Costi)
+if delta_lordo_costi > 0:
+    st.success("Il piano (lordo costi) è in POSITIVO")
+elif abs(delta_lordo_costi) < 0.01:
+    st.warning("Il piano (lordo costi) è NEUTRO")
 else:
-    st.error("Il piano è in NEGATIVO")
+    st.error("Il piano (lordo costi) è in NEGATIVO")
+
+# Banner Semaforo (Netto Costi)
+if delta_netto_costi > 0:
+    st.success("Il piano (netto costi) è in POSITIVO")
+elif abs(delta_netto_costi) < 0.01:
+    st.warning("Il piano (netto costi) è NEUTRO")
+else:
+    st.error("Il piano (netto costi) è in NEGATIVO")
+
+# Banner Semaforo (Netto Tasse)
+if delta_netto_fiscale > 0:
+    st.success("Il piano (netto tasse) è in POSITIVO")
+elif abs(delta_netto_fiscale) < 0.01:
+    st.warning("Il piano (netto tasse) è NEUTRO")
+else:
+    st.error("Il piano (netto tasse) è in NEGATIVO")
+
+# Banner Semaforo (Netto inflazione)
+if delta_netto_inflazione > 0:
+    st.success("Il piano (netto inflazione) è in POSITIVO")
+elif abs(delta_netto_inflazione) < 0.01:
+    st.warning("Il piano (netto inflazione) è NEUTRO")
+else:
+    st.error("Il piano (netto inflazione) è in NEGATIVO")
 
 def display_row_right_aligned(label, value_abs, value_pct=None):
     col_label, col_abs, col_pct = st.columns([2, 1, 1])
