@@ -22,24 +22,25 @@ anni = st.sidebar.slider("Orizzonte temporale (anni)", 1, 20, 5)
 capitale_versato = Ii + (Ir * 12 * anni)
 
 if P == 0:
-    Vfl = Ii + (Ir * 12 * anni)
+    vf_lordo_costi = Ii + (Ir * 12 * anni)
 else:
-    Vfl = (Ii * (1 + P)**anni) + (Ir * 12 * (((1 + P)**anni - 1) / P))
+    vf_lordo_costi = (Ii * (1 + P)**anni) + (Ir * 12 * (((1 + P)**anni - 1) / P))
+delta_lordo_costi = vf_lordo_costi - capitale_versato
 
 costi_una_tantum = Ii * Ci
-costi_totali = costi_una_tantum + (Vfl - (Vfl / ((1 + Cr)**anni)))
-Vnf = Vfl - costi_totali
-delta = Vnf - capitale_versato # profitto/perdita
+costi_totali = costi_una_tantum + (vf_lordo_costi - (vf_lordo_costi / ((1 + Cr)**anni)))
+vf_netto_costi = vf_lordo_costi - costi_totali
+delta_netto_costi = vf_netto_costi - capitale_versato
 
 # Calcolo tasse su delta
-delta_tassabile = max(0, delta)
+delta_tassabile = max(0, delta_netto_costi)
 tasse = delta_tassabile * T
-Vnf_netto_fiscale = Vnf - tasse
-delta_netto_fiscale = Vnf_netto_fiscale - capitale_versato
+vf_netto_fiscale = vf_netto_costi - tasse
+delta_netto_fiscale = vf_netto_fiscale - capitale_versato
 
 # Calcolo valore reale (potere d'acquisto)
-Vnf_netto_inflazione = Vnf_netto_fiscale / ((1 + I)**anni)
-delta_netto_inflazione = Vnf_netto_inflazione - capitale_versato
+vf_netto_inflazione = vf_netto_fiscale / ((1 + I)**anni)
+delta_netto_inflazione = vf_netto_fiscale - capitale_versato
 
 # 3. Risultati e Visualizzazione
 st.subheader("Risultati")
@@ -69,22 +70,22 @@ def display_row_right_aligned(label, value_abs, value_pct=None):
 # Visualizzazione in elenco dettagliato
 st.write("### Dettaglio Finanziario")
 display_row_right_aligned("Capitale Versato", capitale_versato)
-display_row_right_aligned("Valore Finale Lordo Costi", Vfl, ((Vfl/capitale_versato)-1)*100)
+display_row_right_aligned("Valore Finale Lordo Costi", vf_lordo_costi, ((vf_lordo_costi/capitale_versato)-1)*100)
 display_row_right_aligned("Costi Totali", costi_totali, (costi_totali/capitale_versato)*100)
-display_row_right_aligned("Valore Finale Netto Costi", Vnf, ((Vnf/capitale_versato)-1)*100)
-display_row_right_aligned("Profitto/Perdita", delta, (delta/capitale_versato)*100)
+display_row_right_aligned("Valore Finale Netto Costi", vf_netto_costi, ((vf_netto_costi/capitale_versato)-1)*100)
+display_row_right_aligned("Profitto/Perdita", delta_netto_costi, (delta_netto_costi/capitale_versato)*100)
 st.divider()
-display_row_right_aligned("Valore Finale    Netto Tasse", Vnf_netto_fiscale, ((Vnf_netto_fiscale/capitale_versato)-1)*100)
+display_row_right_aligned("Valore Finale    Netto Tasse", vf_netto_fiscale, ((vf_netto_fiscale/capitale_versato)-1)*100)
 display_row_right_aligned("Profitto/Perdita Netto Tasse", delta_netto_fiscale, (delta_netto_fiscale/capitale_versato)*100)
 st.divider()
-display_row_right_aligned("Valore Finale    Netto Inflazione", Vnf_netto_inflazione, ((Vnf_netto_inflazione/capitale_versato)-1)*100)
+display_row_right_aligned("Valore Finale    Netto Inflazione", vf_netto_inflazione, ((vf_netto_inflazione/capitale_versato)-1)*100)
 display_row_right_aligned("Profitto/Perdita Netto Inflazione", delta_netto_inflazione, (delta_netto_inflazione/capitale_versato)*100) 
 
 # Visualizzazione Grafica
 st.subheader("Composizione Valore Finale")
 df = pd.DataFrame({
     "Componente": ["Valore Finale Lordo Costi", "Valore Finale Netto Costi", "Valore Finale Netto Tasse", "Valore Finale Netto Inflazione",],
-    "Valore": [Vfl, Vnf, Vnf_netto_fiscale, Vnf_netto_inflazione]
+    "Valore": [vf_lordo_costi, vf_netto_costi, vf_netto_fiscale, vf_netto_inflazione]
 })
 fig = px.bar(df, x="Componente", y="Valore", color="Componente", text_auto='.2s')
 st.plotly_chart(fig, use_container_width=True)
@@ -93,8 +94,7 @@ st.plotly_chart(fig, use_container_width=True)
 st.subheader("Composizione Valore Finale")
 df = pd.DataFrame({
     "Componente": ["Lordo Costi", "Netto Costi", "Netto Tasse", "Netto Inflazione",],
-    "Valore": [Vfl - capitale_versato, Vnf, delta_netto_fiscale, delta_netto_inflazione]
+    "Valore": [delta_lordo_costi, delta_netto_costi, delta_netto_fiscale, delta_netto_inflazione]
 })
 fig = px.bar(df, x="Componente", y="Valore", color="Componente", text_auto='.2s')
 st.plotly_chart(fig, use_container_width=True)
-
